@@ -1,0 +1,26 @@
+{
+    "variables": {
+        "ssh_username": null,
+        "ssh_password": null
+    },
+
+    "builders": [
+        {
+            "type": "hyperv-iso",
+            "iso_url": "http://centos.mirror.ca.planethoster.net/6.9/isos/x86_64/CentOS-6.9-x86_64-minimal.iso",
+            "iso_checksum": "422af57b493b8af49d485885a730c5a1d955f803fac85aa51311c393168b9080",
+            "iso_checksum_type": "sha256",
+            "ssh_username": "{{user `ssh_username`}}",
+            "ssh_password": "{{user `ssh_password`}}",
+            "shutdown_command": "echo 'packer'|sudo -S /sbin/halt -h -p",
+            "communicator": "ssh",
+            "floppy_files": [ "ks.cfg" ],
+            "ssh_timeout": "360m",
+            "boot_command": [
+                "<tab> text linux ks=hd:fd0:/ks.cfg<enter><wait>"
+            ],
+            "ram_size": 4096,
+            "cpu": 4
+        }
+    ]
+}
